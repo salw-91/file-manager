@@ -15,7 +15,7 @@
                 <NavLink href="/">My Files</NavLink>
                 <NavLink href="/">Shared with me</NavLink>
                 <NavLink href="/">Shared by me</NavLink>
-                <NavLink href="/">Trash!!!!</NavLink>
+                <NavLink href="/">Trash</NavLink>
             </div>
         </div>
     </nav>
