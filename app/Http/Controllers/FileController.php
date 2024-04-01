@@ -16,7 +16,7 @@ class FileController extends Controller
 
     public function createFolder(StoreFolderRequest $request)
     {
-        $data = $request->validate();
+        $data = $request->validated();
         $parent = $request->parent;
 
         if (!$parent) {
@@ -32,6 +32,6 @@ class FileController extends Controller
 
     public function getRoot()
     {
-        return File::query()->whereIsRoot()->where('create_by', Auth::id())->firstOrfail();
+        return File::query()->whereIsRoot()->where('created_by', Auth::id())->firstOrfail();
     }
 }
