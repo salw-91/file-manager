@@ -22,7 +22,7 @@
                     {{ file.name }}
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-grat-900">
-                    {{ file.name }}
+                    {{ file.owner }}
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-grat-900">
                     {{ file.updated_at }}
