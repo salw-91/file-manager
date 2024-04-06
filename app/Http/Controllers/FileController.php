@@ -6,6 +6,7 @@ use App\Models\File;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreFolderRequest;
+use App\Http\Resources\FileResource;
 
 class FileController extends Controller
 {
@@ -18,6 +19,8 @@ class FileController extends Controller
             ->orderBy('is_folder', 'desc')
             ->orderBy('created_at', 'desc')
             ->paginate(10);
+
+        $files = FileResource::collection($files);
 
         return Inertia::render('MyFiles', compact('files'));
     }
