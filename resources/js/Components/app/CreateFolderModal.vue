@@ -3,8 +3,8 @@
         <div class="p-6">
             <h2 class="text-lg font-medium text-gray-900">Create New Folder</h2>
             <div class="mt-6">
-                
                 <InputLabel for="forderName" value="Folder Name" class="sr-only"/>
+                
                 <TextInput  type="text" 
                             ref="forlderNameInput"
                             id="folderName"
@@ -33,17 +33,20 @@
 
 <script setup>
 import Modal from "@/Components/Modal.vue";
-import InputLabel from "../InputLabel.vue";
-import TextInput from "../TextInput.vue";
+import InputLabel from "@/Components/InputLabel.vue";
+import TextInput from "@/Components/TextInput.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import InputError from "@/Components/InputError.vue";
-import { useForm } from "@inertiajs/vue3";
-import PrimaryButton from "../PrimaryButton.vue";
+import { useForm, usePage } from "@inertiajs/vue3";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
 import {nextTick, ref} from "vue";
 
 const form = useForm({
     name: "",
+    parent_id: null
 });
+
+const page = usePage(); 
 
 const emit = defineEmits(["update:modelValue"]);
 
@@ -51,29 +54,32 @@ const forlderNameInput = ref(null)
 
 function onShow(){
     nextTick(()=> forlderNameInput.value.focus() )
-    
 }
 
 const {modelValue} = defineProps({
     modelValue: Boolean
 })
 
-function closeModal(){
-    emit ('update:modelValue')
-    form.clearErrors();
-    form.reset()
-}
-
 function createFolder() {
+    form.parent_id = page.props.folder.id
+    const name = form.name;
+    
     form.post(route('folder.create'), {
         preserveScroll: true,
         onSuccess: () => {
             closeModal()
-            form.reset()
-            forlderNameInput.value = ''
+            // Show success notification
+            showSuccessNotification(`The folder "${name}" was created`)
+            form.reset();
         },
         onError: () => forlderNameInput.value.focus()
     })
+}
+
+function closeModal(){
+    emit ('update:modelValue')
+    form.clearErrors();
+    form.reset()
 }
 
 </script>

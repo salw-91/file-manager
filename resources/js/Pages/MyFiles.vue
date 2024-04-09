@@ -1,5 +1,6 @@
 <template>
     <AuthenticatedLayout>
+        <pre>{{ ancestors }}</pre>
         <table class="min-w-full">
             <thead class="bg-gray-100 border-b">
                 <tr>
@@ -17,7 +18,7 @@
                     </th>
                 </tr>
             </thead>
-            <tr v-for="file of files.data" :key="file.id" class="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
+            <tr v-for="file of files.data" :key="file.id" @dblclick="openFolder(file)" class="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-grat-900">
                     {{ file.name }}
                 </td>
@@ -32,14 +33,26 @@
                 </td>
             </tr>
         </table>
+        <div v-if="!files.data.length" class="py-8 text-center text-sm text-gray-400"> There is no data in the folder</div>
     </AuthenticatedLayout>
 </template>
 
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import { router } from "@inertiajs/vue3";
+
+function openFolder(file) {
+    if (!file.is_folder) {
+        return;
+    }
+
+    router.visit(route('myFiles', {folder: file.path}))
+}
 
 const {files} = defineProps({
-    files: Object
+    files: Object,
+    folder: Object,
+    ancestors: Array
 })
 
 </script>
