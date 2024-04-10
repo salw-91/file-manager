@@ -61,7 +61,7 @@ const {modelValue} = defineProps({
 })
 
 function createFolder() {
-    form.parent_id = page.props.folder.id
+    form.parent_id = page.props.folder.data.id
     const name = form.name;
     
     form.post(route('folder.create'), {
