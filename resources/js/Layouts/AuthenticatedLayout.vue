@@ -23,14 +23,23 @@ import UserSettingDropdown from '@/Components/app/UserSettingDropdown.vue';
 import { onMounted } from "vue";
 import { emitter, FILE_UPLOAD_STARTED } from '@/event-bus.js';
 
-function handleDrop(params) {
-    test
+const dragOver = ref(false)
+
+function onDragOver() {
+    dragOver.value = true
 }
-function onDragOver(params) {
-    test
+
+function onDragLeave() {
+    dragOver.value = false
 }
-function onDragLeave(params) {
-    test
+
+function handleDrop(ev) {
+    dragOver.value = false;
+    const files = ev.dataTransfer.files
+    console.log(files);
+    if (!files.length) {
+        return
+    }
 }
 
 function uploadFiles(files) {
