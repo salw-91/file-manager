@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreFileRequest;
 use App\Models\File;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
@@ -51,6 +52,12 @@ class FileController extends Controller
         $file->name = $data['name'];
 
         $parent->appendNode($file);
+    }
+
+    public function store(StoreFileRequest $request){
+        $data = $request->validated();
+
+        dd($data);
     }
 
     public function getRoot()
